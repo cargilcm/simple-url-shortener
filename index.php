@@ -69,6 +69,11 @@
             $possible_slug = '';
             for($i = 0; $i < $slug_length; $i++) {
                 $possible_slug .= $random_chars[rand(0, strlen($random_chars) - 1)];
+
+                // a randomly generated "stats" slug could break the url routing so override slug_length for this 1 in 26^5 probability chance that "stats" is the random string generated
+                if($possible_slug=="stats"){
+                     $possible_slug .= $random_chars[rand(0, strlen($random_chars) - 1)];
+                }
             }
             $result = mysqli_query($db, "SELECT COUNT(*) FROM links WHERE slug = '$possible_slug'") or error('Could not generate new slug.', 500);
             $row = mysqli_fetch_row($result);
