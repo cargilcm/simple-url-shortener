@@ -78,6 +78,15 @@
             $result = mysqli_query($db, "SELECT COUNT(*) FROM links WHERE slug = '$possible_slug'") or error('Could not generate new slug.', 500);
             $row = mysqli_fetch_row($result);
             $count = $row[0];
+  $stat="stat";
+  $arr=str_split($possible_slug,4);
+  $bool=true;
+  for($i=0;$i<strlen($arr[0]);$i++){
+       if(!$stat[$i]==$arr[0][$i])
+            $bool=false;
+       if($bool && $i==3)
+             $possible_slug.= $random_chars[rand(0, strlen($random_chars) - 1)]; 
+}
             if($count == 0) {
                 $slug = $possible_slug;
             }
